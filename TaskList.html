@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>TaskList</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Electrolize&display=swap" rel="stylesheet">
+<link href="TaskList.css" rel="stylesheet" type="text/css">
+<script src="TaskList.js" defer></script>
+</head>
+
+<body>
+<div class="wrapper">
+    <div class="main_tool">
+
+<!-- HEADER -->   
+
+        <div class="headr">
+            <h1>Tasks list</h1>
+            <h2>&copy; Andrii Solutions Inc.</h2>
+        </div>
+
+<!-- BUTTONS --> 
+
+        <div class="statusRow">
+            <button onclick="showInputForm()">Add new task</button>
+            <button onclick="DeleteTask()">Delete Task </button>
+            <button onmouseenter="hightlightTodayTasks ()" onmouseleave="dehightlightTodayTasks ()">Today's List</button>
+            <button onclick="Sort()">Sort by Due Date</button>
+        </div>
+
+<!-- INPUT FORM -->         
+                    
+        <div class="inputForm hide">
+        <div>
+            <label>Task</label>
+            <input type="text" id="task_text" list="task_variants" name="task_text">
+                <datalist id="task_variants">
+                    <option>Read a book</option>
+                    <option>Eat burger</option>
+                    <option>Exercise for 10 minutes</option>
+                    <option>Feed the parrot</option>
+                    <option>Rule the world</option>                                        
+                </datalist>
+        </div>          
+        <div>
+            <label style="white-space: nowrap;">Due Date</label>
+            <input type="date" id="task_due_date" name="task_due_date" value="Date()">
+        </div>          
+        <div>            
+            <input type="checkbox" id="checkbox_Urgent" value="Urgent">
+            <label for="checkbox_Urgent">Urgent</label>
+            <input type="checkbox" id="checkbox_Important" value="Important">
+            <label for="checkbox_Important">Important</label>
+
+        </div>          
+        <div>
+            <input type="button" id="add_button" value="Add" onclick="addContent()">
+        </div>            
+        </div>           
+        
+<!-- LIST OF TASKS --> 
+
+        <div class="blockForTasks" id="UrgentImportant">
+            <h3>1. Urgent Important</h3>
+            <ul>
+            </ul>
+        </div>
+        
+        <div class="blockForTasks" id="NotUrgentImportant">
+            <h3>2. Not Urgent Important</h3>
+            <ul>
+            </ul>
+        </div>     
+        
+        <div class="blockForTasks" id="UrgentNotImportant">
+            <h3>3. Urgent Not Important</h3>
+            <ul>                
+            </ul>
+        </div>  
+        
+        <div class="blockForTasks" id="NotUrgentNotImportant">
+            <h3>4. Not Urgent Not Important</h3>
+            <ul>               
+            </ul>
+        </div>  
+        
+    </div>
+</div>
+</body>
+</html>
