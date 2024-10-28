@@ -1,7 +1,4 @@
-console.log("I am here");
-
-document.querySelector("#task_due_date").value = new Date().toISOString().substring(0, 10);
-
+// This is main type of object. It will be used to create UrgentImportantTasks, they will be added to one of 4 arrays basing on urgency-importance values
 class TheTask {
   constructor(text, dueDate, urgent, importnt) {
     this.text = text;
@@ -11,6 +8,10 @@ class TheTask {
   } 
 }
 
+// Change the date format for task due date, so that it can be used in the code for comparing with current date
+document.querySelector("#task_due_date").value = new Date().toISOString().substring(0, 10);
+
+// This function just calculates the value to be shown next to the task
 function daysTillEnd (dueDate) {
   var Today = new Date().getTime();
   var DueDateSubstr = new Date(dueDate).getTime();
@@ -26,13 +27,17 @@ function daysTillEnd (dueDate) {
   return DueDaysStatus;
 }
 
+// Here is initial declaration of 4 arrays for Tasks
 var UrgentImportantTasks = [];
 var NotUrgentImportantTasks = [];
 var UrgentNotImportantTasks = [];
 var NotUrgentNotImportantTasks = [];
+
+// These lists will be used later for loops through 4 arrays declared above
 var OverallArray = [UrgentImportantTasks, NotUrgentImportantTasks, UrgentNotImportantTasks, NotUrgentNotImportantTasks];
 var OverallListofIDs = ["UrgentImportant", "NotUrgentImportant", "UrgentNotImportant", "NotUrgentNotImportant"];
 
+// This function adds new task object to the corresponding array and refreshes the page
 function addContent () {
     var text_element = document.querySelector("#task_text");
     var text = text_element.value;
@@ -53,6 +58,7 @@ switch (variant) {
 pageRefresh ("Normal_Mode");
 }
 
+// Page refresh with the actual data from arrays. Also adds "delete" button which is not visible by default
 function pageRefresh (Mode) { 
 for (var i=0; i < 4; i++) {                                          // loop through 4 arrays of tasks
 document.querySelector(`#${OverallListofIDs[i]} ul`).innerHTML="";  // delete the content of the box
@@ -68,7 +74,6 @@ numInList++;
   document.querySelector(`#${OverallListofIDs[i]} ul`).append(added_content);
   }
 }
-
 const Items = document.querySelectorAll('li button')
 Items.forEach((item) => {
   item.addEventListener("click", () => {
@@ -84,28 +89,33 @@ Items.forEach((item) => {
 );
 } 
 
+// Shows and hides fields for new task
 function showInputForm () {
   var toggleBlock = document.querySelector(".inputForm");
   toggleBlock.classList.toggle("hide");
 }  
 
+// Highlights tasks due today when hovering over the corresponding button
 function hightlightTodayTasks () {
   document.querySelector("button[onmouseenter]").style.color = "firebrick";
   document.querySelector("button[onmouseenter]").style.fontWeight="bold";
   pageRefresh ("Highlight_Mode");
   }
 
+// Resets formatting after today's tasks were highlighted
 function dehightlightTodayTasks () {
   document.querySelector("button[onmouseenter]").style.color = "black";
   document.querySelector("button[onmouseenter]").style.fontWeight="normal";  
   pageRefresh ("Normal_Mode");
     }  
 
+// Sorts task objects within each of 4 arrays and refreshes the page    
 function Sort(ArrayName) {
 OverallArray.forEach ((array) => array.sort((a, b) => a.dueDate - b.dueDate));
 pageRefresh ("Normal_Mode");
 }
 
+// Shows delete buttons for each Task
 function DeleteTask() {
   const Items = document.querySelectorAll('li button');
 Items.forEach((item) => {
