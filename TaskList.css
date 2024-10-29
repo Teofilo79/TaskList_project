@@ -8,9 +8,9 @@
 }
 
 :root {
-    --backgrnd-color: #F4D9A9;
-    --lcd-color: #F4D9A9;
-    --text-highlight: firebrick;  
+    --backgrnd-color: #BBB5AA;
+    --lcd-color:palegoldenrod;
+    --text-highlight: firebrick;
 }
 
 .hide {
@@ -35,8 +35,7 @@ body {
 }
 
 .main_tool {
-    /* background-image: linear-gradient(grey 2%, lightgrey 20%, white 50%, lightgrey 80%, grey 100%); */
-    background-image: linear-gradient(#80786D 0%, #BBB5AA 5%, #BBB5AA 95%, #80786D 100%);    
+    /* background-image: linear-gradient(#80786D 0%, #BBB5AA 5%, #BBB5AA 95%, #80786D 100%);     */
     padding-bottom: 20px;
     width: 80vw;
     height: auto;
@@ -44,9 +43,9 @@ body {
     gap:20px;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto auto auto auto; 
-    border: 5px double grey;
-    border-radius: 20px;
-    box-shadow: 15px 15px 40px black;
+    border: 15px double transparent;
+    border-image: url("png-transparent-frame-border-silver.png") 18 stretch;
+    /* box-shadow: 15px 15px 40px black; */
     grid-template-areas: 
     "headr headr"
     "statusRow statusRow"
@@ -56,9 +55,13 @@ body {
 }
 .blockForTasks {
     min-height:150px;
-    border-radius:6px;
-    border: 5px double grey;
-    box-shadow: 0px 5px 10px inset hsla(0,0%,37%,1.00);
+    border-radius:16px;
+    border-width: 15px;
+    border-style: solid;
+    border-image: url("png-transparent-frame-border-silver.png") 18 stretch;
+    border-image-outset: 4px;
+    /* border-color: #f1f1f1; */
+    /* box-shadow: 0px 5px 10px inset hsla(0,0%,37%,1.00); */
     margin: 0px 20px;
     position: relative;
 }
@@ -77,7 +80,7 @@ body {
 .headr > h1 {
     font-family: Electrolize, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-size: 3rem;
-    color:var(--backgrnd-color);
+    color:var(--lcd-color);
     text-shadow: 0px 2px 4px black;
 }
 .headr > h2 {
@@ -89,6 +92,7 @@ body {
 }
 .statusRow {
     display:flex;
+    flex-wrap: wrap;
     align-items: stretch;
     justify-content:space-around;
 }
@@ -111,12 +115,13 @@ font-weight: bold;
     background-color: var(--lcd-color);
     padding: 5px 5px;
     z-index: 2;
+    border-radius: 20px;    
 }
 
 .blockForTasks ul {
-margin:0;
-padding:0;
-z-index:2;
+    margin:0;
+    padding:0;
+    z-index:2;
 }
 
 .blockForTasks li {
@@ -141,7 +146,7 @@ z-index:2;
     color:dimgrey;
     z-index:3;
 }
-.blockForTasks::before {
+/* .blockForTasks::before {
     position: absolute;
     left:0;
     top:20;
@@ -159,11 +164,10 @@ z-index:2;
     content:'';
     width:100%;
     height: 100%;
-    /* background-image: radial-gradient(ellipse at 50% 100%, #ffffff 2%, #ffef44 30%, transparent 80%); */
     border: 5px double grey;
     box-shadow: 0px 5px 10px inset hsla(0,0%,37%,1.00);
     z-index:-1;
-}
+} */
 .inputForm {
     border: 1px dashed black;
     border-radius: 10px;
@@ -181,10 +185,12 @@ z-index:2;
     margin-bottom:10px;
 }
 #add_button, #delete_button, .statusRow button {
+    background: var(--backgrnd-color);    
     border-radius:6px;
-    border: 5px double grey;
+    border: 10px double grey;
     box-shadow: 5px 5px 5px hsla(0,0%,37%,1.00); 
-    background-image: linear-gradient(#80786D 0%, #d1cfcf 15%, #f1f1f1 85%, #80786D 100%);     
+    border-image: url("png-transparent-frame-border-silver.png") 18 stretch;
+    border-image-outset: 4px;
     font-family: Electrolize, Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
     font-size: 1.1rem;
 }
