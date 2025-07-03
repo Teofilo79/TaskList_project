@@ -8,8 +8,9 @@
 }
 
 :root {
-    --backgrnd-color: #BBB5AA;
-    --lcd-color:palegoldenrod;
+    --backgrnd-color: #bbc7cf;
+	--btn-color: #b0b3c0;
+    --lcd-color:rgb(170, 232, 238);
     --text-highlight: firebrick;
 }
 
@@ -55,13 +56,13 @@ body {
 }
 .blockForTasks {
     min-height:150px;
-    border-radius:16px;
+    border-radius:8px;
     border-width: 15px;
-    border-style: solid;
-    border-image: url("png-transparent-frame-border-silver.png") 18 stretch;
-    border-image-outset: 4px;
-    /* border-color: #f1f1f1; */
-    /* box-shadow: 0px 5px 10px inset hsla(0,0%,37%,1.00); */
+    border: 4px groove grey;
+/*		border-image: url("png-transparent-frame-border-silver.png") 18 stretch;
+		border-image-outset: 4px;
+		border-color: #f1f1f1;
+		box-shadow: 0px 5px 10px inset hsla(0,0%,37%,1.00); */
     margin: 0px 20px;
     position: relative;
 }
@@ -94,7 +95,10 @@ body {
     display:flex;
     flex-wrap: wrap;
     align-items: stretch;
+    align-content: stretch;	
     justify-content:space-around;
+	gap:10px;
+	margin:0px 20px;
 }
 
 
@@ -114,8 +118,8 @@ font-weight: bold;
 .blockForTasks {
     background-color: var(--lcd-color);
     padding: 5px 5px;
-    z-index: 2;
-    border-radius: 20px;    
+    z-index: 2;  
+    box-shadow: 5px 5px 10px hsla(0,0%,37%,1.00); 
 }
 
 .blockForTasks ul {
@@ -129,7 +133,7 @@ font-weight: bold;
     padding:0;    
     display: flex;
     flex-wrap: wrap;
-    z-index:2;
+    z-index:2;	
 }
 .blockForTasks div:first-child {
   margin-right:auto;
@@ -185,14 +189,15 @@ font-weight: bold;
     margin-bottom:10px;
 }
 #add_button, #delete_button, .statusRow button {
-    background: var(--backgrnd-color);    
+    background: var(--btn-color);    
     border-radius:6px;
-    border: 10px double grey;
-    box-shadow: 5px 5px 5px hsla(0,0%,37%,1.00); 
-    border-image: url("png-transparent-frame-border-silver.png") 18 stretch;
-    border-image-outset: 4px;
+    border: 4px groove grey;
+
+/*    border-image: url("png-transparent-frame-border-silver.png") 18 stretch; */
+/*    border-image-outset: 4px; */
     font-family: Electrolize, Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
     font-size: 1.1rem;
+	flex-grow:1;
 }
 #task_text {
     border: 1px dashed black;

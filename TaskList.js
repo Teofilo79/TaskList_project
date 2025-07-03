@@ -37,8 +37,14 @@ var NotUrgentNotImportantTasks = [];
 var OverallArray = [UrgentImportantTasks, NotUrgentImportantTasks, UrgentNotImportantTasks, NotUrgentNotImportantTasks];
 var OverallListofIDs = ["UrgentImportant", "NotUrgentImportant", "UrgentNotImportant", "NotUrgentNotImportant"];
 
+document.addEventListener('DOMContentLoaded', function() {
+loadNotes();
+pageRefresh ("Normal_Mode");
+})
+
 // This function adds new task object to the corresponding array and refreshes the page
 function addContent () {
+//	event.preventDefault();
     var text_element = document.querySelector("#task_text");
     var text = text_element.value;
     var due_date_element = document.querySelector("#task_due_date");
@@ -55,39 +61,69 @@ switch (variant) {
   case "true+false" : UrgentNotImportantTasks.push(incomingData); break;
   case "false+false" : NotUrgentNotImportantTasks.push(incomingData); break;
 }
+saveNotes();
 pageRefresh ("Normal_Mode");
+
+}
+
+function saveNotes() {
+//	localStorage.clear();
+    localStorage.setItem('UrgentImportantTasks', JSON.stringify(UrgentImportantTasks));
+    localStorage.setItem('NotUrgentImportantTasks', JSON.stringify(NotUrgentImportantTasks));
+    localStorage.setItem('UrgentNotImportantTasks', JSON.stringify(UrgentNotImportantTasks));
+    localStorage.setItem('NotUrgentNotImportantTasks', JSON.stringify(NotUrgentNotImportantTasks));
+}
+
+function loadNotes() {
+    const UI_Tasks = localStorage.getItem('UrgentImportantTasks');
+    const NUI_Tasks = localStorage.getItem('NotUrgentImportantTasks');
+    const UNI_Tasks = localStorage.getItem('UrgentNotImportantTasks');
+    const NUNI_Tasks = localStorage.getItem('NotUrgentNotImportantTasks');
+    UrgentImportantTasks = UI_Tasks ? JSON.parse(UI_Tasks) : []
+    NotUrgentImportantTasks = NUI_Tasks ? JSON.parse(NUI_Tasks) : []
+    UrgentNotImportantTasks = UNI_Tasks ? JSON.parse(UNI_Tasks) : []
+    NotUrgentNotImportantTasks = NUNI_Tasks ? JSON.parse(NUNI_Tasks) : []
+    OverallArray = [UrgentImportantTasks, NotUrgentImportantTasks, UrgentNotImportantTasks, NotUrgentNotImportantTasks];
 }
 
 // Page refresh with the actual data from arrays. Also adds "delete" button which is not visible by default
-function pageRefresh (Mode) { 
-for (var i=0; i < 4; i++) {                                          // loop through 4 arrays of tasks
-document.querySelector(`#${OverallListofIDs[i]} ul`).innerHTML="";  // delete the content of the box
-var numInList = -1;
-for (const item of OverallArray[i]) {                               // fill box with tasks from corresponding array
-numInList++;
-  let HightlightColor = "black";
-  if (Mode !== "Normal_Mode" ) {daysTillEnd(item["dueDate"]) == "for today" ? HightlightColor = "firebrick" : HightlightColor = "black"; }
-  let added_content = document.createElement("li");
-  added_content.innerHTML = `<div>${item["text"]}</div><div>
-  <span style="font-weight:normal">${daysTillEnd(item["dueDate"])}</span></div><button class="hide" id="${OverallListofIDs[i]}${numInList}">[X]</button>`;
-  added_content.style.color = HightlightColor;
-  document.querySelector(`#${OverallListofIDs[i]} ul`).append(added_content);
-  }
-}
+function pageRefresh (Mode) {
+
+if(OverallArray.length !== 0) {
+
+	for (var i=0; i < 4; i++) {                                          // loop through 4 arrays of tasks
+	document.querySelector(`#${OverallListofIDs[i]} ul`).innerHTML="";  // delete the content of the box
+	var numInList = -1;
+	for (const item of OverallArray[i]) {                               // fill box with tasks from corresponding array
+	numInList++;
+	  let HightlightColor = "black";
+	  if (Mode !== "Normal_Mode" ) {daysTillEnd(item["dueDate"]) == "for today" ? HightlightColor = "firebrick" : HightlightColor = "black"; }
+	  let added_content = document.createElement("li");
+	  added_content.innerHTML = `<div>${item["text"]}</div><div>
+	  <span style="font-weight:normal">${daysTillEnd(item["dueDate"])}</span></div><button class="hide" id="${OverallListofIDs[i]}${numInList}">[X]</button>`;
+	  added_content.style.color = HightlightColor;
+	  document.querySelector(`#${OverallListofIDs[i]} ul`).append(added_content);
+	  }
+	}
+	
 const Items = document.querySelectorAll('li button')
-Items.forEach((item) => {
-  item.addEventListener("click", () => {
-    var LiItem = item.getAttribute("id");
-    var NeededArrayId = LiItem.slice(0,(LiItem.length - 1));   
-    var NeededArrayName = NeededArrayId + "Tasks";
-    var NeededItemPosition = LiItem.slice(-1);
-    var arr = window[NeededArrayName];
-    window[NeededArrayName].splice(NeededItemPosition,1);
-    pageRefresh ("Normal_Mode");
-  });
+
+	Items.forEach((item) => {
+	  item.addEventListener("click", () => { 
+		const LiItem = item.getAttribute("id");
+		const NeededArrayId = LiItem.slice(0,(LiItem.length - 1));   
+		const NeededArrayName = NeededArrayId + "Tasks";
+		const NeededItemPosition = LiItem.slice(-1);
+		const arr = window[NeededArrayName];
+		window[NeededArrayName].splice(NeededItemPosition,1);
+    saveNotes();
+		pageRefresh ("Normal_Mode");
+			});
+		}
+	);
+
 }
-);
-} 
+};
 
 // Shows and hides fields for new task
 function showInputForm () {
@@ -122,3 +158,4 @@ Items.forEach((item) => {
   item.classList.toggle("hide");
 })
 }
+
